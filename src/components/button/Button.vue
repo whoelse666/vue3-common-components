@@ -1,9 +1,9 @@
 <template>
   <button
-    class="el-button" 
+    class="el-button"
     :class="[
       buttonSize ? `el-button--${buttonSize}` : '',
-      type ? `el-button--${type}` : ''
+      type ? `el-button--${type}` : '',
     ]"
   >
     <slot />
@@ -11,35 +11,34 @@
 </template>
 
 <script lang="ts">
-export default{
-  name:'ElButton'
-}
+export default {
+  name: 'ElButton',
+};
 </script>
 
 <script setup lang="ts">
-
-import {computed, withDefaults} from 'vue'
+import { computed, withDefaults } from 'vue';
 import { useGlobalConfig } from '../../util';
 
 interface Props {
-  size?:""|'small'|'medium'|'large',
-  type?:""|'primary'|'success'|'danger'
+  size?: '' | 'small' | 'medium' | 'large';
+  type?: '' | 'primary' | 'success' | 'danger';
 }
-const props = withDefaults(defineProps<Props>(),{
-  size:"",
-  type:""
-})
-const globalConfig = useGlobalConfig()
-const buttonSize = computed(()=>{
-  console.log(props.size,globalConfig)
-  return props.size||globalConfig.size
-})
+const props = withDefaults(defineProps<Props>(), {
+  size: '',
+  type: '',
+});
+const globalConfig = useGlobalConfig();
+const buttonSize = computed(() => {
+  // console.log(props.size, globalConfig);
+  return props.size || globalConfig.size;
+});
 </script>
 
 <style lang="scss">
 @import '../styles/mixin';
 
-@include b(button){
+@include b(button) {
   display: inline-block;
   line-height: 1;
   white-space: nowrap;
@@ -66,8 +65,8 @@ const buttonSize = computed(()=>{
   &:hover,
   &:focus {
     color: $--color-primary;
-    border-color: mix($--color-white,$--color-primary,70%);
-    background-color: mix($--color-white,$--color-primary,90%);
+    border-color: mix($--color-white, $--color-primary, 70%);
+    background-color: mix($--color-white, $--color-primary, 90%);
   }
   @include m(medium) {
     @include button-size(
@@ -84,7 +83,6 @@ const buttonSize = computed(()=>{
       $--button-small-font-size,
       $--button-small-border-radius
     );
-
   }
   @include m(large) {
     @include button-size(
@@ -94,7 +92,7 @@ const buttonSize = computed(()=>{
       $--button-large-border-radius
     );
   }
-@include m(primary) {
+  @include m(primary) {
     @include button-variant(
       $--button-primary-font-color,
       $--button-primary-background-color,
@@ -115,6 +113,5 @@ const buttonSize = computed(()=>{
       $--button-danger-border-color
     );
   }
-
 }
 </style>
