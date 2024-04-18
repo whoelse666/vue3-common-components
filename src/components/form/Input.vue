@@ -11,7 +11,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { inject} from "vue";
+import { inject } from "vue";
 import { key } from "./type";
 import { emitter } from "../../emitter";
 
@@ -26,8 +26,8 @@ const onInput = (e: Event) => {
   // emitter.emit("validate");
 };
 const onBlur = (e: Event) => {
-  console.log("e",formData?.prop);
-  emitter.emit("validate",formData?.prop);
+  console.log("e", formData?.prop);
+  emitter.emit("validate", formData?.prop);
 };
 </script>
 
