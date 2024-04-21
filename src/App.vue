@@ -15,7 +15,7 @@
       </el-form-item>
       <br />
       <el-form-item>
-        <el-button type="primary" @click="login">登 录</el-button>
+        <el-button type="primary" @click="login">登录</el-button>
       </el-form-item>
     </el-form>
   </div>
