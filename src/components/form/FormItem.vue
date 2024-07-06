@@ -14,7 +14,7 @@ export default {
 };
 </script>
 <script setup lang="ts">
-import { provide, inject, defineProps, defineExpose, ref, onMounted } from "vue";
+import { provide, inject, ref, onMounted } from "vue";
 import { emitter } from "../../emitter";
 import { FormItem, key } from "./type";
 import Schema from "async-validator";

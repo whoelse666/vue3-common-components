@@ -100,12 +100,12 @@ const rules = reactive({
     {
       required: true,
       message: "请输入密码！"
-      }  ,
+    },
     {
       min: 6,
       max: 10,
       message: "密码长度为6-10"
-   }
+    }
   ]
 });
 
