@@ -3,22 +3,21 @@
     <slot />
   </div>
 </template>
-
 <script lang="ts">
 export default {
   name: "ElForm"
 };
 </script>
+
 <script setup lang="ts">
-import { PropType, provide, ref } from "vue";
+import { PropType, provide } from "vue";
 import { Rules } from "async-validator";
+import { ref } from "vue";
 import { emitter } from "../../emitter";
 import { FormItem, key } from "./type";
+
 const props = defineProps({
-  model: {
-    type: Object,
-    required: true
-  },
+  model: { type: Object, required: true },
   rules: { type: Object as PropType<Rules> }
 });
 
@@ -26,15 +25,16 @@ provide(key, {
   model: props.model,
   rules: props.rules
 });
+
 const items = ref<FormItem[]>([]);
 
 emitter.on("addFormItem", item => {
-  console.log("item", item);
   items.value.push(item);
 });
 
 function validate(cb: (isValid: boolean) => void) {
   const tasks = items.value.map(item => item.validate());
+  console.log("tasks", tasks);
   Promise.all(tasks)
     .then(() => {
       cb(true);
@@ -43,7 +43,10 @@ function validate(cb: (isValid: boolean) => void) {
       cb(false);
     });
 }
-defineExpose({ validate });
+
+defineExpose({
+  validate
+});
 </script>
 
 <style lang="scss">

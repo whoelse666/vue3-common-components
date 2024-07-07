@@ -6,7 +6,7 @@
   </div>
 
   <div v-if="comp == 'form'">
-    <el-form ref="myForm" :model="model" :rules="rules">
+   <el-form ref="myForm" :model="model" :rules="rules">
       <el-form-item label="用户名：" prop="username">
         <el-input v-model="model.username" />
       </el-form-item>
@@ -17,7 +17,7 @@
       <el-form-item>
         <el-button type="primary" @click="login">登录</el-button>
       </el-form-item>
-    </el-form>
+    </el-form> 
   </div>
 
   <div v-if="comp == 'button'">
@@ -67,12 +67,12 @@
   </div>
 </template>
 <script setup lang="ts">
-import ElButton from "./components/button/Button.vue";
+// import ElButton from "./components/button/Button.vue";
 import ElDialog from "./components/dialog/Dialog.vue";
 
 import { ref, reactive } from "vue";
 const comp = ref("form");
-import { FormType } from "./components/form/type";
+import { FormType } from "./components/form1/type";
 
 const compExamples = ref(["container", "button", "form", "dialog", "notification"]);
 

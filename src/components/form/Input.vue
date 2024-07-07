@@ -1,38 +1,32 @@
 <template>
   <div>
-    <input :value="modelValue" class="el-input--inner" @input="onInput" @blur="onBlur" />
+    <input :value="modelValue" class="el-input--inner" @input="onInput" />
   </div>
 </template>
-
 <script lang="ts">
 export default {
-  name: "ElInput"
+  name: 'ElInput',
 };
 </script>
-
 <script setup lang="ts">
-import { inject } from "vue";
-import { key } from "./type";
-import { emitter } from "../../emitter";
+import { emitter } from '../../emitter';
 
-defineProps({
-  modelValue: [String, Number]
-});
-const formData = inject(key);
-const emit = defineEmits(["update:modelValue"]);
-const onInput = (e: Event) => {
+defineProps<{
+  modelValue: string;
+}>();
+
+const emit = defineEmits<{
+  (e: 'update:model-value', value: string): void;
+}>();
+
+function onInput(e: Event) {
   const input = e.target as HTMLInputElement;
-  emit("update:modelValue", input.value);
-  // emitter.emit("validate");
-};
-const onBlur = (e: Event) => {
-  console.log("e", formData?.prop);
-  emitter.emit("validate", formData?.prop);
-};
+  emit('update:model-value', input.value);
+  emitter.emit('validate');
+}
 </script>
-
 <style lang="scss">
-@import "../styles/mixin";
+@import '../styles/mixin';
 @include b(input) {
   @include m(inner) {
     -webkit-appearance: none;

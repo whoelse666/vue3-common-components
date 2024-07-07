@@ -7,69 +7,63 @@
     </p>
   </div>
 </template>
-
 <script lang="ts">
 export default {
-  name: "ElFormItem"
+  name: 'ElFormItem',
 };
 </script>
+
 <script setup lang="ts">
-import { provide, inject, ref, onMounted } from "vue";
-import { emitter } from "../../emitter";
-import { FormItem, key } from "./type";
-import Schema from "async-validator";
+import Schema from 'async-validator';
+import { onMounted, ref, inject } from 'vue';
+import { FormItem, key } from './type';
+import { emitter } from '../../emitter';
+
 interface Props {
   label?: string;
   prop?: string;
 }
-const props = withDefaults(defineProps<Props>(), { label: "", prop: "" });
 
+const props = withDefaults(defineProps<Props>(), { label: '', prop: '' });
 // 错误
-const propVal = ref<string | undefined>("");
-const error = ref<string | undefined>("");
+const error = ref('');
+
 const formData = inject(key);
 
-provide(key, { prop: props.prop });
-
 const o: FormItem = {
-  validate
+  validate,
 };
+
+defineExpose(o);
+
 onMounted(() => {
   if (props.prop) {
-    emitter.emit("addFormItem", o);
-    emitter.on("validate", v => {
-      propVal.value = v;
+    emitter.on('validate', () => {
       validate();
     });
+    emitter.emit('addFormItem', o);
   }
 });
+
 function validate() {
   if (formData?.rules === undefined) {
     return Promise.resolve({ result: true });
   }
-  if (props.prop === propVal.value) {
-    console.log("props.prop", props.prop, propVal.value);
-    const rules = formData?.rules[props.prop];
-    const model = formData?.model[props.prop];
-    const schema = new Schema({
-      [props.prop]: rules
-    });
-
-    return schema.validate({ [props.prop]: model }, errors => {
-      if (errors) {
-        error.value = errors[0].message;
-      } else {
-        error.value = "";
-      }
-    });
-  }
+  const rules = formData.rules[props.prop];
+  const value = formData.model[props.prop];
+  const schema = new Schema({ [props.prop]: rules });
+  return schema.validate({ [props.prop]: value }, (errors) => {
+    if (errors) {
+      error.value = errors[0].message || '校验错误';
+    } else {
+      error.value = '';
+    }
+  });
 }
-
-defineExpose(o);
 </script>
 
 <style lang="scss">
-@import "../styles/mixin";
+@import '../styles/mixin';
 @include b(form-item) {
   margin-bottom: 22px;
   label {
